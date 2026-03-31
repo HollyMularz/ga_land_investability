@@ -21,15 +21,33 @@ This repository contains all files and instructions to recreate the Georgia coun
 1. Upload the parquet files (and any raw CSV/Excel files) to Snowflake.  
 2. Run `GA_Land_Investability_Setup.sql` in your Snowflake environment.  
 3. Query the view `VW_COUNTY_INVESTABILITY` to access the final investability scores and tiers.  
+
 *Note:* The Snowflake view `VW_COUNTY_INVESTABILITY` can be used as a data source for a Sigma dashboard.
 
 ## Scoring Overview
 
-- Population Growth, Median Family Income, and School Quality are all combined into an **investability score**.  
-- School letter grades are derived from CCRPI scores in Snowflake.  
+The **investability score** evaluates county-level land potential based on three factors:
+
+- **Population Growth (40%)** – Measures expected growth from 2020 to 2025. Higher growth indicates stronger housing demand.  
+- **Median Family Income (35%)** – Reflects whether residents can afford new homes. Higher income contributes more to the score.  
+- **School Quality (25%)** – Based on CCRPI scores. Converted into letter grades in Snowflake using these thresholds:  
+  - **A:** ≥ 90  
+  - **B:** ≥ 80  
+  - **C:** ≥ 65  
+  - **D:** ≥ 50  
+  - **F:** < 50  
+
+Each factor is scaled to its weight (**Population 40, Income 35, School 25**) and summed to create the **investability score**.
+
+**Investability Tiers:**
+
+- **High:** 70 and above  
+- **Medium:** 50–69  
+- **Low:** Below 50  
 
 ## Notes
 
 - Fully reproducible from the files in this repo.  
-- No external Snowflake access required — the SQL file recreates the full database, tables, and view.  
-- Includes detailed ETL session notes for transparency of transformations and column handling.
+- Requires a Snowflake account to run the SQL setup and recreate the database, tables, and view.  
+- Includes detailed ETL session notes for transparency of transformations and column handling.  
+- The Snowflake view `VW_COUNTY_INVESTABILITY` can serve as a data source for dashboards such as Sigma.
