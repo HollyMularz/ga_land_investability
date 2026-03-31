@@ -21,6 +21,7 @@ This repository contains all files and instructions to recreate the Georgia coun
 1. Upload the parquet files (and any raw CSV/Excel files) to Snowflake.  
 2. Run `GA_Land_Investability_Setup.sql` in your Snowflake environment.  
 3. Query the view `VW_COUNTY_INVESTABILITY` to access the final investability scores and tiers.  
+*Note:* The Snowflake view `VW_COUNTY_INVESTABILITY` can be used as a data source for a Sigma dashboard.
 
 ## Scoring Overview
 
